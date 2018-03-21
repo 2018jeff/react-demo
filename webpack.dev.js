@@ -6,24 +6,28 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
 
-const prod = merge(common,{
+
+const dev = merge(common,{
   mode: 'development',
-  devtool: 'inline-source-map',
-  entry: [
-    'webpack-dev-server/client?http://127.0.0.1:3000',
-    'webpack/hot/dev-server',
-    './src/app/app.js',
-    './src/bind/bind.js',
-  ],
+  devtool: 'source-map',
   output: {
     filename: '[name].bundle.js',
-    publicPath: '/[name]/',
+    // publicPath: './dist',
   },
   devServer: {
     hot: true,
-    contentBase: path.resolve(__dirname, './dist'),
+    contentBase: path.resolve(__dirname, './src'),
+    historyApiFallback: {
+      rewrites: [
+        // shows views/landing.html as the landing page
+        { from: /^\/*/, to: '/app/index.html' },
+        // shows views/subpage.html for all routes starting with /subpage
+        { from: /^\/app/, to: '/app/index.html' },
+        // shows views/404.html on all other pages
+        { from: /./, to: '/views/404.html' },
+      ],
+    },
     port: 8080, //如果省略，默认8080
-    publicPath: "/"
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -33,5 +37,5 @@ const prod = merge(common,{
     // new webpack.NoErrorsPlugin()
   ]
 });
-
-module.exports = prod;
+console.log('prod entry', dev);
+module.exports = dev;

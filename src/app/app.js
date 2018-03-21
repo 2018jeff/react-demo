@@ -1,39 +1,29 @@
-import { React } from 'react';
-import { render } from 'react-dom';
+import React from 'react';
 
-import { BrowserRouter as Router, Route, Switch } from 'react-router';
 
-class App extends React.Component {
+import { BrowserRouter as Router, HashRouter, Route, Link } from "react-router-dom";
 
+import Home from './pages/Home/Home.react';
+
+import Log from './pages/Log/Log.react';
+export default class App extends React.Component {
   render() {
+    const supportsHistory = 'pushState' in window.history
     return (
-      <Router>
-        <Route path="/" component={Home} />
-        <Route path="/about" component={About} />
-        <Route path="/Topic" component={Topic} />
-      </Router>
+      <div>
+        <header> Welcome the react world </header>
+        <Router basename="app"  forceRefresh={!supportsHistory}>
+          <div>
+            <ul>
+              <Link to="/">Home</Link>
+              <Link to="log">log</Link>
+            </ul>
+            <Route  exact path="/" component={Home} />
+            <Route path="/log" component={Log} />
+          </div>
+        </Router>
+      </div>
     )
   }
 }
 
-
-
-const Home = () => (
-  <div>
-    Home Component.
-  </div>
-)
-
-const About = () => (
-  <div>
-      About Component.
-  </div>
-)
-
-const Topic = () => (
-  <div>
-      Topic Component.
-  </div>
-)
-
-render(App, document.getElementById("app"));

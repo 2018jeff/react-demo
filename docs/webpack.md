@@ -1,4 +1,11 @@
 
+
+## readme
+webpack4.0 对应的plugin 需要注意是否支持.
+babel 对于react的配置 (http://babeljs.io/docs/usage/babelrc/)
+### entry.
+
+
 ### benchmark tests 基准测试.
 
 ### index.html

@@ -1,39 +1,28 @@
-import { React } from 'react';
-import { render } from 'react-dom';
+import React from 'react';
 
-import { BrowserRouter as Router, Route, Switch } from 'react-router';
 
-class Bind extends React.Component {
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
+
+import Card from './pages/Card/Card.react';
+export default class App extends React.Component {
   render() {
+    const supportsHistory = 'pushState' in window.history
     return (
-      <Router>
-        <Route path="/" component={Home} />
-        <Route path="/about" component={About} />
-        <Route path="/Topic" component={Topic} />
-      </Router>
+      <div>
+        <header> Welcome the react world </header>
+        <Router basename="bind"  forceRefresh={!supportsHistory}>
+          <div>
+            <ul>
+              <Link to="/">Home</Link>
+              <Link to="/car">Card</Link>
+            </ul>
+            <Route  exact path="/" component={Card} />
+            <Route path="/car" component={Card} />
+          </div>
+        </Router>
+      </div>
     )
   }
 }
 
-
-
-const Home = () => (
-  <div>
-    Home Component.
-  </div>
-)
-
-const About = () => (
-  <div>
-      About Component.
-  </div>
-)
-
-const Topic = () => (
-  <div>
-      Topic Component.
-  </div>
-)
-
-render(Bind, document.getElementById("bind"));
